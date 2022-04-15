@@ -27,9 +27,9 @@ while True:
     
     soup = BeautifulSoup(html, 'html.parser')
     
-    links = [(x.get('href'),) for x in soup.find_all('a', href= True, class_='fnmrjs-0 fyjObc', limit=hjs)]
+    links = [(x.get('href'), x.get('href').split('-')[-1]) for x in soup.find_all('a', href= True, class_='fnmrjs-0 fyjObc', limit=hjs)]
 
-    curs.executemany('INSERT INTO links(href) VALUES(?);', links)
+    curs.executemany('INSERT OR IGNORE INTO links(href, olx_code) VALUES(?, ?);', links)
 
     print(f'Página {pg} foi um SUCESSO! +{hjs} links')
     con.commit()
