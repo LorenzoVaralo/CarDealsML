@@ -1,17 +1,9 @@
 from datetime import datetime
 start = datetime.now()
-import ast
 import json
 import os
-import re
 import sqlite3
-from unicodedata import normalize
-import matplotlib.pyplot as plt
-import nltk
-import numpy as np
 import pandas as pd
-import regex
-import requests
 
 
 def valorFipe(row):
@@ -40,15 +32,11 @@ def gearbox_in_name(dfo, lista, gear):
     return dfo
 
 
-#limit = 'LIMIT 10000'
-limit = 'LIMIT 20000'
-
 DIRECTORY_PATH = os.path.abspath(os.path.dirname(__file__))
-
 con = sqlite3.connect(os.path.join(DIRECTORY_PATH, 'database'))
-curr = con.cursor()
 
-df = pd.read_sql(f'SELECT * FROM CarInfoRaw {limit};', con, index_col='Id')
+
+df = pd.read_sql(f'SELECT * FROM CarInfoRaw;', con, index_col='Id')
 fipe = pd.read_sql('SELECT * FROM fipe;', con)
 fipe.Modelo = fipe.Modelo.str.upper()
 
@@ -129,7 +117,7 @@ df.loc[(df.vehicle_model.str.find('FLEX') > -1)&(df.fuel != 'Flex'), 'fuel'] = '
 #Se não é Flex, Diesel ou Gasolina, é considerado "Outro"
 df.loc[(df.fuel != 'Flex')&(df.fuel != 'Gasolina')&(df.fuel != 'Diesel'), 'fuel'] = 'Outro'
 
-df.to_csv('Dataframe.csv')
+df.to_csv(os.path.join(DIRECTORY_PATH, 'DataframeModin.csv'))
 
 print(df.__len__())
 print(datetime.now() - start)
