@@ -10,4 +10,6 @@ The bash script `inference.sh` is used to process and predict short volumes of d
 
 The bash script `fit.sh` is used to process and predict the whole car info table, whilst configuring and calibrating the parameters like data mean, standard deviation, words and model, so the pipeline can be used afterwards to transform unseen data, a new machine learning model of type "lightgbm" is trained and compared with past models, the best model is then choosen to be the model used at inference.
 
+
+### Executing bash scripts
 To execute the bash scripts it might be necessary to give the right permission to the script, you can execute `chmod u+x <script name>.sh` for every bash script you are going to execute, after giving permission you can execute the scripts by: `./<script name>.sh` (remember to be at the same file as the project in the terminal).
